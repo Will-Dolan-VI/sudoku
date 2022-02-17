@@ -33,3 +33,16 @@
 .error {
     background-color: #f76c5e;
 }
+td {
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-bottom: 15px;
+    text-align: center;
+}
+th {
+    padding-right: 15px;
+    padding-left: 15px;
+    border-bottom: 1px solid black;
+    padding-bottom: 15px;
+    text-align: center;
+}
