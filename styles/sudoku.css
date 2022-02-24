@@ -16,10 +16,13 @@
 }#digit-table {
     /*width: 50vw;*/
     width: 430px;
+    /*with eraser:*/
+    /*width: 445px;*/
 }
 .digit-cell {
     outline: 1px solid black;
     height:40px;
+    width:15px;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -27,8 +30,14 @@
 .selectable:hover {
     background-color: #f5dd90;
 }
+.selected {
+    background-color: #f5dd90;
+}
 .user-input {
     background-color: #f2f2f2;
+}
+.initial {
+    background-color: rgb(230, 230, 230);
 }
 .error {
     background-color: #f76c5e;
