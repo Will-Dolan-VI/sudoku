@@ -14,10 +14,9 @@
     width: 405px;
     outline: 4px solid black;
 }#digit-table {
-    /*width: 50vw;*/
-    width: 430px;
+    /*width: 430px;*/
     /*with eraser:*/
-    /*width: 445px;*/
+    width: 445px;
 }
 .digit-cell {
     outline: 1px solid black;

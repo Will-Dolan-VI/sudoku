@@ -14,7 +14,7 @@ for (var i = 0; i < 2; i++) {
   }
 }
 
-digitCells = new Array(9)
+digitCells = new Array(10)
 
 //Create sudoku board
 for (let i = 0; i < 3; i++){
@@ -52,8 +52,6 @@ for (let i = 0; i < 3; i++){
   }
 }
 
-
-
 //Create digit selection row
 digitTable = document.createElement('div');
 digitTable.setAttribute("class", "row");
@@ -74,21 +72,21 @@ for (let i = 1; i <= 9; i++){
   digitTable.appendChild(digit);
 }
 
-//Eraser Button functional, but it can erase initial numbers
-//Does not get highlighted when clicked
-/*
+
 //Create eraser button
 erase = document.createElement('div');
 erase.setAttribute("id", "erase");
 erase.setAttribute("class", "digit-cell selectable col");
 erase.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-eraser-fill" viewBox="0 0 15 15"><path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/></svg>'
+digitCells[9] = erase;
 erase.onclick = function(){
   selectedNumber = "";
   clearErrors();
   clearHighlights();
+  (digitCells[9]).classList.add("selected");
 }
 digitTable.appendChild(erase);
-*/
+
 
 
 //Create undo button
@@ -117,7 +115,7 @@ setInitial()
 
 function placeNumber(x, y) {
   if(selectedNumber != -1){
-    if ((gameBoard[x][y]).innerHTML == "" || moves.includes([x,y,""])){
+    if ((gameBoard[x][y]).innerHTML == "" || findMove(x,y,"")){
       if ((gameBoard[x][y]).innerHTML != selectedNumber && (selectedNumber == 0 || !checkMatches(x,y))){
         moves.push([x,y, (gameBoard[x][y]).innerHTML]);
         (gameBoard[x][y]).innerHTML = selectedNumber;
@@ -147,14 +145,12 @@ function checkMatches(x, y) {
 function highlightErrors(conflicts){
   for (let i = 0; i<9; i++){
     for (let k = 0; k<conflicts.length; k++){
-      console.log(conflicts[k][0] + ","+i)
       if(sameColumn(conflicts[k][0],i))
         errorCol(i);
     }
   }
   for (let i = 0; i<9; i++){
     for (let k = 0; k<conflicts.length; k++){
-      console.log(conflicts[k][1] + ","+i);
       if(sameRow(conflicts[k][1],i))
         errorRow(i);
     }
@@ -162,7 +158,6 @@ function highlightErrors(conflicts){
   for (let i = 0; i<9; i+= 3){
     for (let j = 0; j<9; j+= 3){
       for (let k = 0; k<conflicts.length; k++){
-        console.log(conflicts[k][0] + ","+i);
         if(sameBlock(conflicts[k][0],conflicts[k][1], i, j))
         errorBlock(i,j);
       }
@@ -230,6 +225,15 @@ function undoMove(){
     previousMove = moves.pop();
     gameBoard[previousMove[0]][previousMove[1]].innerHTML = previousMove[2];
   }
+}
+
+function findMove(x, y, value){
+  for(let k = 0; k < moves.length; k++){
+    //Only lets you change values that you actually placed.
+    if(moves[k][0] == x && moves[k][1] == y)
+      return true;
+  }
+  return false;
 }
 
 
